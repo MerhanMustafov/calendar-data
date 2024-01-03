@@ -1,0 +1,6 @@
+node_modules
+dist
+.vscode
+# the following two lines mean - ignore everything in the root except the "src" directory
+/*
+!/src
