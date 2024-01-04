@@ -2,7 +2,6 @@
   "name": "calendar-data",
   "version": "1.0.0",
   "description": "Generate calendar data effortlessly using intuitive utility functions.",
-  "private": true,
   "scripts": {
     "start": "webpack && webpack serve --env mode=prod",
     "dev": "webpack && webpack serve --env mode=dev",
