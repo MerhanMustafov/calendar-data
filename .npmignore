@@ -1,12 +1,2 @@
-.vscode
-node_modules
-src
-.eslintrc
-.eslintignore
-.prettierrc
-.prettierignore
-.gitignore
-package.json
-package-lock.json
-tsconfig.json
-webpack.config.ts
+/*
+!dist/
