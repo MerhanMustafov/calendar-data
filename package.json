@@ -1,12 +1,12 @@
 {
   "name": "calendar-data",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "Generate calendar data effortlessly using intuitive utility functions.",
   "main": "dist/index.js",
   "scripts": {
     "start": "webpack && webpack serve --env mode=prod",
     "dev": "webpack && webpack serve --env mode=dev",
-    "build:prod": "webpack --env mode=dev",
+    "build": "webpack --env mode=prod",
     "build:dev": "webpack --env mode=dev",
     "fixTsAliases": "tsc-alias -p tsconfig.aliases.json",
     "pretty": "prettier --write .",

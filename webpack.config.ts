@@ -11,11 +11,18 @@ type IConfiguration = (env: IEnv) => WebpackConfig & { devServer?: WebpackDevSer
 
 const config: IConfiguration = (env) => {
   const isProduction = env.mode === 'prod' ? true : false;
+  const htmlPlugin = isProduction
+    ? undefined
+    : new HtmlWebpackPlugin({
+        template: './src/template.html',
+        filename: '[name].html',
+        title: 'Calendar-Data'
+      });
 
   return {
     mode: isProduction ? 'production' : 'development',
     stats: isProduction ? 'none' : 'minimal',
-    devtool: 'source-map',
+    devtool: isProduction ? undefined : 'source-map',
     entry: {
       index: {
         import: './src/index.ts'
@@ -23,8 +30,8 @@ const config: IConfiguration = (env) => {
     },
     output: {
       filename: '[name].js',
-      chunkFilename: '[name].[contenthash].chunk.js', // Specify a unique filename for chunks
-      sourceMapFilename: '[name].[contenthash].js.map', // Specify the desired name template for source maps
+      chunkFilename: isProduction ? undefined : '[name].[contenthash].chunk.js', // Specify a unique filename for chunks
+      sourceMapFilename: isProduction ? undefined : '[name].[contenthash].js.map', // Specify the desired name template for source maps
       path: path.resolve(__dirname, 'dist'),
       clean: true // clean the dist folder before each build
     },
@@ -60,13 +67,7 @@ const config: IConfiguration = (env) => {
         }
       ]
     },
-    plugins: [
-      new HtmlWebpackPlugin({
-        template: './src/template.html',
-        filename: '[name].html',
-        title: 'Calendar-Data'
-      })
-    ],
+    plugins: [htmlPlugin],
     optimization: {
       minimize: true,
       minimizer: [
