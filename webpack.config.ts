@@ -11,13 +11,17 @@ type IConfiguration = (env: IEnv) => WebpackConfig & { devServer?: WebpackDevSer
 
 const config: IConfiguration = (env) => {
   const isProduction = env.mode === 'prod' ? true : false;
-  const htmlPlugin = isProduction
-    ? undefined
-    : new HtmlWebpackPlugin({
+  const plugins: any[] = [];
+
+  if (!isProduction) {
+    plugins.push(
+      new HtmlWebpackPlugin({
         template: './src/template.html',
         filename: '[name].html',
         title: 'Calendar-Data'
-      });
+      })
+    );
+  }
 
   return {
     mode: isProduction ? 'production' : 'development',
@@ -67,7 +71,7 @@ const config: IConfiguration = (env) => {
         }
       ]
     },
-    plugins: [htmlPlugin],
+    plugins: plugins,
     optimization: {
       minimize: true,
       minimizer: [
