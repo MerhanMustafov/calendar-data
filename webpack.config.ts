@@ -22,7 +22,7 @@ const config: IConfiguration = (env) => {
       }
     },
     output: {
-      filename: '[name].[contenthash].js',
+      filename: '[name].js',
       chunkFilename: '[name].[contenthash].chunk.js', // Specify a unique filename for chunks
       sourceMapFilename: '[name].[contenthash].js.map', // Specify the desired name template for source maps
       path: path.resolve(__dirname, 'dist'),
