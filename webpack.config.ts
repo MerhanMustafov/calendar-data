@@ -37,6 +37,7 @@ const config: IConfiguration = (env) => {
       chunkFilename: isProduction ? undefined : '[name].[contenthash].chunk.js', // Specify a unique filename for chunks
       sourceMapFilename: isProduction ? undefined : '[name].[contenthash].js.map', // Specify the desired name template for source maps
       path: path.resolve(__dirname, 'dist'),
+      libraryTarget: 'umd',
       clean: true // clean the dist folder before each build
     },
     resolve: {
