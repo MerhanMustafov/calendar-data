@@ -1,6 +1,6 @@
 import path from 'path';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
-import { Configuration as WebpackConfig, webpack } from 'webpack';
+import { Configuration as WebpackConfig } from 'webpack';
 import { Configuration as WebpackDevServerConfig } from 'webpack-dev-server';
 import TerserPlugin from 'terser-webpack-plugin';
 
