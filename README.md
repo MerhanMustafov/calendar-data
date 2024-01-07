@@ -27,21 +27,87 @@ import {getDaysInMonth, getYearData} from 'calendar-data';
 ```
 ### Fn 1: `getDaysInMonth`
 ```typescript
-getDaysInMonth(
-  year: number,
-  month: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12,
-  firstDayOfWeek: "Mon" | "Tue" | "Wed" | "Thu" | "Fri" | "Sat" | "Sun"
-)
+getDaysInMonth(2021, 6, 'Mon');
 
-// returns 
+// returns
+{
+    "daysInMonth": [
+        {
+            "yearNumber": 2021,
+            "monthNumber": 6,
+            "dayNumberInMonth": null,
+            "isWeekendDay": false
+        },
+        {
+            "yearNumber": 2021,
+            "monthNumber": 6,
+            "dayNumberInMonth": 1,
+            "isWeekendDay": false
+        },
+
+        ....
+
+        {
+            "yearNumber": 2021,
+            "monthNumber": 6,
+            "dayNumberInMonth": 30,
+            "isWeekendDay": false
+        },
+        {
+            "yearNumber": 2021,
+            "monthNumber": 6,
+            "dayNumberInMonth": null,
+            "isWeekendDay": false
+        },
+        {
+            "yearNumber": 2021,
+            "monthNumber": 6,
+            "dayNumberInMonth": null,
+            "isWeekendDay": false
+        },
+        {
+            "yearNumber": 2021,
+            "monthNumber": 6,
+            "dayNumberInMonth": null,
+            "isWeekendDay": false
+        },
+        {
+            "yearNumber": 2021,
+            "monthNumber": 6,
+            "dayNumberInMonth": null,
+            "isWeekendDay": false
+        }
+    ],
+    "weekDaysStrings": [
+        "Mon",
+        "Tue",
+        "Wed",
+        "Thu",
+        "Fri",
+        "Sat",
+        "Sun"
+    ]
+}
 ```
 <br />
 
 ### Fn 2: `getYearData`
 ```typescript
-getYearData(
-  year: number,
-  firstDayOfWeek: "Mon" | "Tue" | "Wed" | "Thu" | "Fri" | "Sat" | "Sun"
-)
-// returns 
+getYearData(2021, 'Mon');
+
+// returns
+// The returned data is the same as getDaysInMonth but for all the months
+{
+  1:  {
+        "daysInMonth": ...
+        "weekDaysStrings": ...
+      }
+
+    ...
+
+  12: {
+        "daysInMonth": ...
+        "weekDaysStrings": ...
+      }
+}
 ```
