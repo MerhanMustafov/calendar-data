@@ -12,8 +12,14 @@ Install using Yarn
 yarn add calendar-data
 ```
 
+## Video
+[Open on Youtube](https://www.youtube.com/watch?v=jaEUFHxXsRk)
+
+https://github.com/MerhanMustafov/calendar-data/assets/76586375/7f7c7050-275a-41d7-bbe8-35e74e628b84
+
+
 ## Overview
-Typecript library that provides easy to use intuitive utility function for retrieving calendar data. These functions aim to help you generate the data you need for a calendar in two ways - **monthly** or **yearly** based. 
+TypeScript library that provides an easy-to-use and intuitive utility function for retrieving calendar data. These functions aim to help you generate the data you need for a calendar in two ways - **monthly** or **yearly** based.
 
 1. Monthly data retrieval happens via: `getDaysInMonth`
 2. Yearly data retrieval happens via: `getYearData`
