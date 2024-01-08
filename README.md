@@ -18,9 +18,9 @@ yarn add calendar-data
 
 ## Video
 
-[Video](https://github.com/MerhanMustafov/calendar-data/assets/76586375/7f7c7050-275a-41d7-bbe8-35e74e628b84)
+[Video](https://github.com/MerhanMustafov/calendar-data/assets/76586375/d4f5ac7c-5b57-405f-b2c4-1afbe62a27d6)
 
-[Open on Youtube](https://www.youtube.com/watch?v=jaEUFHxXsRk)
+[Open on Youtube](https://www.youtube.com/watch?v=WGA6uzkSRbk)
 
 ## Overview
 
