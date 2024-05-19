@@ -1,5 +1,8 @@
 # Note :information_source:
-From version `1.0.23` the library works on both **node** and **browser** environments 
+From version `1.0.23` the library supports both **node** and **browser** environments. 
+
+**And can be used on both `client` and `server` side components.**
+
 # calendar-data
 
 <br />
