@@ -1,3 +1,5 @@
+# Note :information_source:
+From version `1.0.23` the library works on both **node** and **browser** environments 
 # calendar-data
 
 <br />
