@@ -4,10 +4,11 @@
   "description": "Generate calendar data effortlessly using intuitive utility functions.",
   "main": "dist/index.js",
   "scripts": {
-    "start": "webpack --env mode=prod && webpack serve",
-    "dev": "webpack --env mode=dev && webpack serve",
-    "build": "webpack --env mode=prod",
-    "build:dev": "webpack --env mode=dev",
+    "build:prod": "webpack --env mode=dev --config ./webpack.config.ts",
+    "dev:node": "nodemon dist/index.js",
+    "build:node:watch": "webpack --watch --env mode=dev --config ./webpack.config.node.ts",
+    "dev:web": "webpack --env mode=dev && webpack serve --config ./webpack.config.web.ts",
+    "build:web:watch": "webpack --watch --env mode=dev --config ./webpack.config.web.ts",
     "fixTsAliases": "tsc-alias -p tsconfig.aliases.json",
     "pretty": "prettier --write .",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -24,6 +25,7 @@
     "css-loader": "^6.8.1",
     "eslint": "^8.56.0",
     "html-webpack-plugin": "^5.6.0",
+    "nodemon": "^3.1.1",
     "postcss-loader": "^7.3.4",
     "prettier": "^3.1.1",
     "style-loader": "^3.3.3",

@@ -29,8 +29,7 @@ const config: WebpackConfig = (env) => {
     },
     devServer: {
       compress: true,
-      port: 9000,
-      open: true,
+      port: 9001,
       hot: true // enable hot module replacement feature
     },
     module: {
