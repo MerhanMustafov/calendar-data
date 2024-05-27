@@ -1,4 +1,7 @@
 {
+  "workbench.tree.enableStickyScroll": false,
+  "editor.stickyScroll.enabled": false,
+
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
   "editor.detectIndentation": false,
