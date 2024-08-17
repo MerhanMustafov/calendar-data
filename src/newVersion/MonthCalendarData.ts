@@ -1,40 +1,24 @@
 import { firstDayOfWeekLookUp, weekLookUp, FirstDayOfWeekString } from './constants';
-import { MonthIndex, MonthNumber } from './types';
+import { MonthDTO } from './month/MonthDTO';
+import { MonthFactory } from './month/MonthFactory';
+import { MonthIndex, MonthNumber, WeekDayIndex, WeekDayNumber } from './types';
 
 export class MonthCalendarData {
-  private _defaultDate = new Date();
-  private _defaultYear = this._defaultDate.getFullYear();
+  private monthFactory: MonthFactory = new MonthFactory();
 
-  private _prevYear: number = this._defaultDate.getFullYear() - 1;
-  private _prevMonthIndex: MonthIndex = (this._defaultDate.getMonth() - 2) as MonthIndex;
+  private prevMonth: MonthDTO;
+  private currentMonth: MonthDTO;
+  private nextMonth: MonthDTO;
 
-  private _currYear: number = this._defaultDate.getFullYear();
-  private _currMonthIndex: MonthIndex = (this._defaultDate.getMonth() - 1) as MonthIndex;
+  private firstDayOfWeekString: FirstDayOfWeekString = 'Mon';
 
-  private _nextYear: number = this._defaultDate.getFullYear() + 1;
-  private _nextMonthIndex: MonthIndex = (this._defaultDate.getMonth() + 1) as MonthIndex;
+  constructor(year: number, monthNumber: MonthNumber, firstDayOfWeek?: FirstDayOfWeekString) {
+    this.currentMonth = this.monthFactory.createCurrentMonth(year, monthNumber);
 
-  private _firstDayOfWeek: FirstDayOfWeekString = 'Mon';
+    this.prevMonth = this.monthFactory.createPreviouseMonthFrom(this.currentMonth);
+    this.nextMonth = this.monthFactory.createPreviouseMonthFrom(this.currentMonth);
 
-  constructor(year?: number, monthNumber?: MonthNumber, firstDayOfWeek?: FirstDayOfWeekString) {
-    this._currYear = year || this._currYear;
-    this._currMonthIndex = monthNumber ? ((monthNumber - 1) as MonthIndex) : this._currMonthIndex;
-    this._firstDayOfWeek = firstDayOfWeek || 'Mon';
-
-    this.initPrevMonthData();
-    this.initNextMothData();
-  }
-
-  private initPrevMonthData() {
-    this._prevYear = this._currMonthIndex === 0 ? this._currYear - 1 : this._currYear;
-    this._prevMonthIndex =
-      this._currMonthIndex === 0 ? 11 : ((this._currMonthIndex - 1) as MonthIndex);
-  }
-
-  private initNextMothData() {
-    this._nextYear = this._currMonthIndex === 11 ? this._currYear + 1 : this._currYear;
-    this._nextMonthIndex =
-      this._currMonthIndex === 11 ? 0 : ((this._currMonthIndex + 1) as MonthIndex);
+    this.firstDayOfWeekString = firstDayOfWeek || 'Mon';
   }
 
   generateData() {
@@ -45,17 +29,20 @@ export class MonthCalendarData {
   }
 
   private generatePrevMonthFormattedData() {
-    const fweek = this.generateFirstWeekEmptyDays();
-    const prev = this.generateArrayOfPrevMonthDays().reverse().slice(0, fweek).reverse();
+    const firstWeekEmptyDays = this.generateFirstWeekEmptyDays();
+    const prev = this.generateArrayOfPrevMonthDays()
+      .reverse()
+      .slice(0, firstWeekEmptyDays)
+      .reverse();
 
     return prev.map((day) => {
-      const date = new Date(this._prevYear, this._prevMonthIndex, day);
+      const date = new Date(this.prevMonth.year, this.prevMonth.monthIndex, day);
       const formattedDate = this.getFormattedDate(date);
       const isWeekend = date.getDay() === 0 || date.getDay() === 6;
 
       return {
-        year: this._prevYear,
-        monthNumber: this._prevMonthIndex + 1,
+        year: this.prevMonth.year,
+        monthNumber: this.prevMonth.monthIndex + 1,
         day,
         date: formattedDate,
         isWeekend
@@ -65,13 +52,13 @@ export class MonthCalendarData {
   private generateCurrMonthFormattedData() {
     const curr = this.generateArrayOfCurrMonthDays();
     return curr.map((day) => {
-      const date = new Date(this._currYear, this._currMonthIndex, day);
+      const date = new Date(this.currentMonth.year, this.currentMonth.monthIndex, day);
       const formattedDate = this.getFormattedDate(date);
       const isWeekend = date.getDay() === 0 || date.getDay() === 6;
 
       return {
-        year: this._currYear,
-        monthNumber: this._currMonthIndex + 1,
+        year: this.currentMonth.year,
+        monthNumber: this.currentMonth.monthIndex + 1,
         day,
         date: formattedDate,
         isWeekend
@@ -79,16 +66,16 @@ export class MonthCalendarData {
     });
   }
   private generateNextMonthFormattedData() {
-    const lweek = this.generateLastWeekEmptyDays();
-    const next = this.generateArrayOfNextMonthDays().slice(0, lweek);
+    const lastWeekEmptyDays = this.generateLastWeekEmptyDays();
+    const next = this.generateArrayOfNextMonthDays().slice(0, lastWeekEmptyDays);
     return next.map((day) => {
-      const date = new Date(this._nextYear, this._nextMonthIndex, day);
+      const date = new Date(this.nextMonth.year, this.nextMonth.monthIndex, day);
       const formattedDate = this.getFormattedDate(date);
       const isWeekend = date.getDay() === 0 || date.getDay() === 6;
 
       return {
-        year: this._nextYear,
-        monthNumber: this._nextMonthIndex + 1,
+        year: this.nextMonth.year,
+        monthNumber: this.nextMonth.monthIndex + 1,
         day,
         date: formattedDate,
         isWeekend
@@ -97,36 +84,39 @@ export class MonthCalendarData {
   }
 
   private generateArrayOfPrevMonthDays() {
-    const prevYear = this._currMonthIndex === 0 ? this._currYear - 1 : this._currYear;
-    const prevMonthIndex =
-      this._currMonthIndex === 0 ? 11 : ((this._currMonthIndex - 1) as MonthIndex);
-
-    return this.getDaysArrayFor(prevYear, prevMonthIndex);
+    return this.getDaysArrayFor(this.prevMonth.year, this.prevMonth.monthIndex);
   }
   private generateArrayOfCurrMonthDays() {
-    return this.getDaysArrayFor(this._currYear, this._currMonthIndex);
+    return this.getDaysArrayFor(this.currentMonth.year, this.currentMonth.monthIndex);
   }
   private generateArrayOfNextMonthDays() {
-    const nextYear = this._currMonthIndex === 11 ? this._currYear + 1 : this._currYear;
-    const nextMonthIndex =
-      this._currMonthIndex === 11 ? 0 : ((this._currMonthIndex + 1) as MonthIndex);
-
-    return this.getDaysArrayFor(nextYear, nextMonthIndex);
+    return this.getDaysArrayFor(this.nextMonth.year, this.nextMonth.monthIndex);
   }
 
   private generateFirstWeekEmptyDays() {
-    const firstDayOfWeekNumber = new Date(this._currYear, this._currMonthIndex, 1).getDay();
-    const fWeek = firstDayOfWeekNumber === 0 ? 7 : firstDayOfWeekNumber;
-    return weekLookUp[firstDayOfWeekLookUp[this._firstDayOfWeek]].emptyBoxesFirstWeek[
-      fWeek as 1 | 2 | 3 | 4 | 5 | 6 | 7
+    const firstDayOfWeekIndex = new Date(
+      this.currentMonth.year,
+      this.currentMonth.monthIndex,
+      1
+    ).getDay() as WeekDayIndex;
+
+    const firstDayOfWeekNumber = (
+      firstDayOfWeekIndex === 0 ? 7 : firstDayOfWeekIndex
+    ) as WeekDayNumber;
+    return weekLookUp[firstDayOfWeekLookUp[this.firstDayOfWeekString]].emptyBoxesFirstWeek[
+      firstDayOfWeekNumber
     ];
   }
 
   private generateLastWeekEmptyDays() {
-    const lastDayOfWeekNumber = new Date(this._currYear, this._currMonthIndex + 1, 0).getDay();
-    const lWeek = lastDayOfWeekNumber === 0 ? 7 : lastDayOfWeekNumber;
-    return weekLookUp[firstDayOfWeekLookUp[this._firstDayOfWeek]].emptyBoxesLastWeek[
-      lWeek as 1 | 2 | 3 | 4 | 5 | 6 | 7
+    const lastDayOfWeekIndex = new Date(
+      this.currentMonth.year,
+      this.currentMonth.monthIndex + 1,
+      0
+    ).getDay() as WeekDayIndex;
+    const lastDayOfWeekNumber = lastDayOfWeekIndex === 0 ? 7 : lastDayOfWeekIndex;
+    return weekLookUp[firstDayOfWeekLookUp[this.firstDayOfWeekString]].emptyBoxesLastWeek[
+      lastDayOfWeekNumber
     ];
   }
 
