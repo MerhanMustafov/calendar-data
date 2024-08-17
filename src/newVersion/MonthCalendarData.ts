@@ -1,7 +1,7 @@
-import { firstDayOfWeekLookUp, weekLookUp, FirstDayOfWeekString } from './constants';
+import { firstDayOfWeekLookUp, weekLookUp } from './constants';
 import { MonthDTO } from './month/MonthDTO';
 import { MonthFactory } from './month/MonthFactory';
-import { MonthIndex, MonthNumber, WeekDayIndex, WeekDayNumber } from './types';
+import { MonthIndex, MonthNumber, WeekDayIndex, WeekDayNumber, WeekDayString } from './types';
 
 export class MonthCalendarData {
   private monthFactory: MonthFactory = new MonthFactory();
@@ -10,9 +10,9 @@ export class MonthCalendarData {
   private currentMonth: MonthDTO;
   private nextMonth: MonthDTO;
 
-  private firstDayOfWeekString: FirstDayOfWeekString = 'Mon';
+  private firstDayOfWeekString: WeekDayString = 'Mon';
 
-  constructor(year: number, monthNumber: MonthNumber, firstDayOfWeek?: FirstDayOfWeekString) {
+  constructor(year: number, monthNumber: MonthNumber, firstDayOfWeek?: WeekDayString) {
     this.currentMonth = this.monthFactory.createCurrentMonth(year, monthNumber);
 
     this.prevMonth = this.monthFactory.createPreviouseMonthFrom(this.currentMonth);
