@@ -16,7 +16,7 @@ export class MonthCalendarData {
     this.currentMonth = this.monthFactory.createCurrentMonth(year, monthNumber);
 
     this.prevMonth = this.monthFactory.createPreviouseMonthFrom(this.currentMonth);
-    this.nextMonth = this.monthFactory.createPreviouseMonthFrom(this.currentMonth);
+    this.nextMonth = this.monthFactory.createNextMonthFrom(this.currentMonth);
 
     this.firstDayOfWeekString = firstDayOfWeek || 'Mon';
   }
