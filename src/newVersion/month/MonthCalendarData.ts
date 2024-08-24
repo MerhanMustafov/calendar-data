@@ -1,10 +1,12 @@
-import { firstDayOfWeekLookUp, weekLookUp } from './constants';
-import { MonthDTO } from './month/MonthDTO';
-import { MonthFactory } from './month/MonthFactory';
-import { MonthIndex, MonthNumber, WeekDayIndex, WeekDayNumber, WeekDayString } from './types';
+import { firstDayOfWeekLookUp, weekLookUp } from '../constants';
+import { MonthDTO } from './MonthDTO';
+import { MonthFactory } from './MonthFactory';
+import { MonthNumber, WeekDayIndex, WeekDayNumber, WeekDayString } from '../types';
+import { MonthUtils } from './MonthUtils';
 
 export class MonthCalendarData {
   private monthFactory: MonthFactory = new MonthFactory();
+  private monthUtils: MonthUtils = new MonthUtils();
 
   private prevMonth: MonthDTO;
   private currentMonth: MonthDTO;
@@ -84,13 +86,13 @@ export class MonthCalendarData {
   }
 
   private generateArrayOfPrevMonthDays() {
-    return this.getDaysArrayFor(this.prevMonth.year, this.prevMonth.monthIndex);
+    return this.monthUtils.getDaysArrayFor(this.prevMonth.year, this.prevMonth.monthIndex);
   }
   private generateArrayOfCurrMonthDays() {
-    return this.getDaysArrayFor(this.currentMonth.year, this.currentMonth.monthIndex);
+    return this.monthUtils.getDaysArrayFor(this.currentMonth.year, this.currentMonth.monthIndex);
   }
   private generateArrayOfNextMonthDays() {
-    return this.getDaysArrayFor(this.nextMonth.year, this.nextMonth.monthIndex);
+    return this.monthUtils.getDaysArrayFor(this.nextMonth.year, this.nextMonth.monthIndex);
   }
 
   private generateFirstWeekEmptyDays() {
@@ -124,17 +126,5 @@ export class MonthCalendarData {
     return `${date.getFullYear()}/${
       date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : date.getMonth() + 1
     }/${date.getDate() < 10 ? `0${date.getDate()}` : date.getDate()}`;
-  }
-
-  private getDaysArrayFor(year: number, monthIndex: MonthIndex) {
-    const daysArray = [];
-    const date = new Date(year, monthIndex, 1);
-
-    while (date.getMonth() === monthIndex) {
-      daysArray.push(date.getDate());
-      date.setDate(date.getDate() + 1);
-    }
-
-    return daysArray;
   }
 }

@@ -1,5 +1,5 @@
 import { firstDayOfWeekLookUp, weekLookUp, FirstDayOfWeekString } from './constants';
-import { MonthCalendarData } from './MonthCalendarData';
+import { MonthCalendarData } from './month/MonthCalendarData';
 
 export class YearCalendarData {
   private currDate = new Date();
