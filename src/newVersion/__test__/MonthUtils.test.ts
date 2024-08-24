@@ -8,10 +8,8 @@ describe('MonthUtils:', () => {
   });
   describe('Test number of days for a month in a provided year (METHOD: getDaysArrayFor)', () => {
     describe('2020 (leap year)', () => {
-      let yearNumber: number;
-      beforeAll(() => {
-        yearNumber = 2020;
-      });
+      const yearNumber = 2020;
+
       it('January', () => {
         const arrayOfDaysInAMonth = monthUtils.getDaysArrayFor(yearNumber, 0);
         expect(arrayOfDaysInAMonth).toHaveLength(31);
@@ -62,10 +60,8 @@ describe('MonthUtils:', () => {
       });
     });
     describe('2021', () => {
-      let yearNumber: number;
-      beforeAll(() => {
-        yearNumber = 2021;
-      });
+      const yearNumber = 2021;
+
       it('January', () => {
         const arrayOfDaysInAMonth = monthUtils.getDaysArrayFor(yearNumber, 0);
         expect(arrayOfDaysInAMonth).toHaveLength(31);
@@ -116,10 +112,8 @@ describe('MonthUtils:', () => {
       });
     });
     describe('2022', () => {
-      let yearNumber: number;
-      beforeAll(() => {
-        yearNumber = 2022;
-      });
+      const yearNumber = 2022;
+
       it('January', () => {
         const arrayOfDaysInAMonth = monthUtils.getDaysArrayFor(yearNumber, 0);
         expect(arrayOfDaysInAMonth).toHaveLength(31);
@@ -170,10 +164,8 @@ describe('MonthUtils:', () => {
       });
     });
     describe('2023', () => {
-      let yearNumber: number;
-      beforeAll(() => {
-        yearNumber = 2023;
-      });
+      const yearNumber = 2023;
+
       it('January', () => {
         const arrayOfDaysInAMonth = monthUtils.getDaysArrayFor(yearNumber, 0);
         expect(arrayOfDaysInAMonth).toHaveLength(31);
@@ -224,10 +216,8 @@ describe('MonthUtils:', () => {
       });
     });
     describe('2024 (leap year)', () => {
-      let yearNumber: number;
-      beforeAll(() => {
-        yearNumber = 2024;
-      });
+      const yearNumber = 2024;
+
       it('January', () => {
         const arrayOfDaysInAMonth = monthUtils.getDaysArrayFor(yearNumber, 0);
         expect(arrayOfDaysInAMonth).toHaveLength(31);
@@ -278,10 +268,8 @@ describe('MonthUtils:', () => {
       });
     });
     describe('2025', () => {
-      let yearNumber: number;
-      beforeAll(() => {
-        yearNumber = 2025;
-      });
+      const yearNumber = 2025;
+
       it('January', () => {
         const arrayOfDaysInAMonth = monthUtils.getDaysArrayFor(yearNumber, 0);
         expect(arrayOfDaysInAMonth).toHaveLength(31);
@@ -332,10 +320,8 @@ describe('MonthUtils:', () => {
       });
     });
     describe('2026', () => {
-      let yearNumber: number;
-      beforeAll(() => {
-        yearNumber = 2026;
-      });
+      const yearNumber = 2026;
+
       it('January', () => {
         const arrayOfDaysInAMonth = monthUtils.getDaysArrayFor(yearNumber, 0);
         expect(arrayOfDaysInAMonth).toHaveLength(31);
@@ -384,6 +370,45 @@ describe('MonthUtils:', () => {
         const arrayOfDaysInAMonth = monthUtils.getDaysArrayFor(yearNumber, 11);
         expect(arrayOfDaysInAMonth).toHaveLength(31);
       });
+    });
+  });
+  describe.only('Test correct Date format (METHOD: getFormattedDate)', () => {
+    const date = new Date(2020, 0, 1);
+    const format = 'YYYY/MM/DD';
+
+    it('Should return: YYYY/MM/DD', () => {
+      const separator = '/';
+      const year = String(date.getFullYear());
+      const month = String(
+        date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : date.getMonth() + 1
+      );
+      const day = String(date.getDate() < 10 ? `0${date.getDate()}` : date.getDate());
+      const formattedDate = monthUtils.getFormattedDate({ date, format, separator });
+
+      expect(formattedDate).toBe(`${year}${separator}${month}${separator}${day}`);
+    });
+    it('Should return: YYYY-MM-DD', () => {
+      const separator = '-';
+      const year = String(date.getFullYear());
+      const month = String(
+        date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : date.getMonth() + 1
+      );
+      const day = String(date.getDate() < 10 ? `0${date.getDate()}` : date.getDate());
+      const formattedDate = monthUtils.getFormattedDate({ date, format, separator });
+
+      expect(formattedDate).toBe(`${year}${separator}${month}${separator}${day}`);
+    });
+
+    it('Should return: YYYY.MM.DD', () => {
+      const separator = '.';
+      const year = String(date.getFullYear());
+      const month = String(
+        date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : date.getMonth() + 1
+      );
+      const day = String(date.getDate() < 10 ? `0${date.getDate()}` : date.getDate());
+      const formattedDate = monthUtils.getFormattedDate({ date, format, separator });
+
+      expect(formattedDate).toBe(`${year}${separator}${month}${separator}${day}`);
     });
   });
 });
