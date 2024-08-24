@@ -372,7 +372,7 @@ describe('MonthUtils:', () => {
       });
     });
   });
-  describe.only('Test correct Date format (METHOD: getFormattedDate)', () => {
+  describe('Test correct Date format (METHOD: getFormattedDate)', () => {
     const date = new Date(2020, 0, 1);
     const format = 'YYYY/MM/DD';
 

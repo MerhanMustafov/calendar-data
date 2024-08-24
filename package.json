@@ -11,7 +11,7 @@
     "build:web:watch": "webpack --watch --env mode=dev --config ./webpack.config.web.ts",
     "fixTsAliases": "tsc-alias -p tsconfig.aliases.json",
     "pretty": "prettier --write .",
-    "test": "jest --watch"
+    "test": "jest --watchAll"
   },
   "keywords": [],
   "author": "Merhan Mustafov",
