@@ -1,4 +1,6 @@
-import { DateFormat, MonthIndex } from '../types';
+import { firstDayOfWeekLookUp, weekLookUp } from '../constants';
+import { DateFormat, MonthIndex, WeekDayIndex, WeekDayNumber } from '../types';
+import { MonthDTO } from './MonthDTO';
 
 export class MonthUtils {
   public getFormattedDate({
@@ -33,5 +35,31 @@ export class MonthUtils {
     }
 
     return daysArray;
+  }
+
+  public getLastWeekNumberOfEmptyDays(month: MonthDTO) {
+    const lastDayOfWeekIndex = new Date(
+      month.year,
+      month.monthIndex + 1,
+      0
+    ).getDay() as WeekDayIndex;
+    const lastDayOfWeekNumber = (
+      lastDayOfWeekIndex === 0 ? 7 : lastDayOfWeekIndex
+    ) as WeekDayNumber;
+
+    return weekLookUp[firstDayOfWeekLookUp[month.firstDayOfWeekString]].emptyBoxesLastWeek[
+      lastDayOfWeekNumber
+    ];
+  }
+
+  public getFirstWeekNumberOfEmptyDays(month: MonthDTO) {
+    const firstDayOfWeekIndex = new Date(month.year, month.monthIndex, 1).getDay() as WeekDayIndex;
+
+    const firstDayOfWeekNumber = (
+      firstDayOfWeekIndex === 0 ? 7 : firstDayOfWeekIndex
+    ) as WeekDayNumber;
+    return weekLookUp[firstDayOfWeekLookUp[month.firstDayOfWeekString]].emptyBoxesFirstWeek[
+      firstDayOfWeekNumber
+    ];
   }
 }

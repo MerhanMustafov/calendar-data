@@ -1,7 +1,6 @@
-import { firstDayOfWeekLookUp, weekLookUp } from '../constants';
 import { MonthDTO } from './MonthDTO';
 import { MonthFactory } from './MonthFactory';
-import { MonthNumber, WeekDayIndex, WeekDayNumber, WeekDayString } from '../types';
+import { MonthNumber, WeekDayString } from '../types';
 import { MonthUtils } from './MonthUtils';
 
 export class MonthCalendarData {
@@ -12,15 +11,11 @@ export class MonthCalendarData {
   private currentMonth: MonthDTO;
   private nextMonth: MonthDTO;
 
-  private firstDayOfWeekString: WeekDayString = 'Mon';
-
   constructor(year: number, monthNumber: MonthNumber, firstDayOfWeek?: WeekDayString) {
-    this.currentMonth = this.monthFactory.createCurrentMonth(year, monthNumber);
+    this.currentMonth = this.monthFactory.createCurrentMonth(year, monthNumber, firstDayOfWeek);
 
     this.prevMonth = this.monthFactory.createPreviouseMonthFrom(this.currentMonth);
     this.nextMonth = this.monthFactory.createNextMonthFrom(this.currentMonth);
-
-    this.firstDayOfWeekString = firstDayOfWeek || 'Mon';
   }
 
   generateData() {
@@ -31,7 +26,7 @@ export class MonthCalendarData {
   }
 
   private generatePrevMonthFormattedData() {
-    const firstWeekEmptyDays = this.generateFirstWeekEmptyDays();
+    const firstWeekEmptyDays = this.monthUtils.getFirstWeekNumberOfEmptyDays(this.currentMonth);
     const prev = this.generateArrayOfPrevMonthDays()
       .reverse()
       .slice(0, firstWeekEmptyDays)
@@ -74,7 +69,7 @@ export class MonthCalendarData {
     });
   }
   private generateNextMonthFormattedData() {
-    const lastWeekEmptyDays = this.generateLastWeekEmptyDays();
+    const lastWeekEmptyDays = this.monthUtils.getLastWeekNumberOfEmptyDays(this.currentMonth);
     const next = this.generateArrayOfNextMonthDays().slice(0, lastWeekEmptyDays);
     return next.map((day) => {
       const date = new Date(this.nextMonth.year, this.nextMonth.monthIndex, day);
@@ -102,32 +97,5 @@ export class MonthCalendarData {
   }
   private generateArrayOfNextMonthDays() {
     return this.monthUtils.getDaysArrayFor(this.nextMonth.year, this.nextMonth.monthIndex);
-  }
-
-  private generateFirstWeekEmptyDays() {
-    const firstDayOfWeekIndex = new Date(
-      this.currentMonth.year,
-      this.currentMonth.monthIndex,
-      1
-    ).getDay() as WeekDayIndex;
-
-    const firstDayOfWeekNumber = (
-      firstDayOfWeekIndex === 0 ? 7 : firstDayOfWeekIndex
-    ) as WeekDayNumber;
-    return weekLookUp[firstDayOfWeekLookUp[this.firstDayOfWeekString]].emptyBoxesFirstWeek[
-      firstDayOfWeekNumber
-    ];
-  }
-
-  private generateLastWeekEmptyDays() {
-    const lastDayOfWeekIndex = new Date(
-      this.currentMonth.year,
-      this.currentMonth.monthIndex + 1,
-      0
-    ).getDay() as WeekDayIndex;
-    const lastDayOfWeekNumber = lastDayOfWeekIndex === 0 ? 7 : lastDayOfWeekIndex;
-    return weekLookUp[firstDayOfWeekLookUp[this.firstDayOfWeekString]].emptyBoxesLastWeek[
-      lastDayOfWeekNumber
-    ];
   }
 }

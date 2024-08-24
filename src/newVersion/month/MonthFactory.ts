@@ -1,9 +1,9 @@
-import { MonthNumber } from '../types';
+import { MonthNumber, WeekDayString } from '../types';
 import { MonthDTO } from './MonthDTO';
 
 export class MonthFactory {
-  createCurrentMonth(year: number, monthNumber: MonthNumber) {
-    return new MonthDTO(year, monthNumber);
+  createCurrentMonth(year: number, monthNumber: MonthNumber, firstDayOfWeek?: WeekDayString) {
+    return new MonthDTO(year, monthNumber, firstDayOfWeek);
   }
 
   createPreviouseMonthFrom(currMonth: MonthDTO) {

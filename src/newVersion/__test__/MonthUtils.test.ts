@@ -1,3 +1,4 @@
+import { MonthDTO } from '../month/MonthDTO';
 import { MonthUtils } from '../month/MonthUtils';
 
 describe('MonthUtils:', () => {
@@ -409,6 +410,82 @@ describe('MonthUtils:', () => {
       const formattedDate = monthUtils.getFormattedDate({ date, format, separator });
 
       expect(formattedDate).toBe(`${year}${separator}${month}${separator}${day}`);
+    });
+  });
+  describe('Test number of empty days in the first week of a month (METHOD: getFirstWeekNumberOfEmptyDays)', () => {
+    it('2020 January', () => {
+      const month = {
+        year: 2020,
+        monthIndex: 0,
+        firstDayOfWeekString: 'Mon'
+      } as MonthDTO;
+      const emptyDays = monthUtils.getFirstWeekNumberOfEmptyDays(month);
+      expect(emptyDays).toBe(2);
+    });
+    it('2020 February', () => {
+      const month = {
+        year: 2020,
+        monthIndex: 1,
+        firstDayOfWeekString: 'Mon'
+      } as MonthDTO;
+      const emptyDays = monthUtils.getFirstWeekNumberOfEmptyDays(month);
+      expect(emptyDays).toBe(5);
+    });
+    it('2021 February', () => {
+      const month = {
+        year: 2021,
+        monthIndex: 1,
+        firstDayOfWeekString: 'Mon'
+      } as MonthDTO;
+      const emptyDays = monthUtils.getFirstWeekNumberOfEmptyDays(month);
+      expect(emptyDays).toBe(0);
+    });
+    it('2024 July', () => {
+      const month = {
+        year: 2024,
+        monthIndex: 6,
+        firstDayOfWeekString: 'Mon'
+      } as MonthDTO;
+      const emptyDays = monthUtils.getFirstWeekNumberOfEmptyDays(month);
+      expect(emptyDays).toBe(0);
+    });
+  });
+  describe('Test number of empty days in the last week of a month (METHOD: getLastWeekNumberOfEmptyDays)', () => {
+    it('2020 January', () => {
+      const month = {
+        year: 2020,
+        monthIndex: 0,
+        firstDayOfWeekString: 'Mon'
+      } as MonthDTO;
+      const emptyDays = monthUtils.getLastWeekNumberOfEmptyDays(month);
+      expect(emptyDays).toBe(2);
+    });
+    it('2020 February', () => {
+      const month = {
+        year: 2020,
+        monthIndex: 1,
+        firstDayOfWeekString: 'Mon'
+      } as MonthDTO;
+      const emptyDays = monthUtils.getLastWeekNumberOfEmptyDays(month);
+      expect(emptyDays).toBe(1);
+    });
+    it('2021 February', () => {
+      const month = {
+        year: 2021,
+        monthIndex: 1,
+        firstDayOfWeekString: 'Mon'
+      } as MonthDTO;
+      const emptyDays = monthUtils.getLastWeekNumberOfEmptyDays(month);
+      expect(emptyDays).toBe(0);
+    });
+    it('2024 July', () => {
+      const month = {
+        year: 2024,
+        monthIndex: 6,
+        firstDayOfWeekString: 'Mon'
+      } as MonthDTO;
+      const emptyDays = monthUtils.getLastWeekNumberOfEmptyDays(month);
+      expect(emptyDays).toBe(4);
     });
   });
 });
