@@ -39,7 +39,10 @@ export class MonthCalendarData {
 
     return prev.map((day) => {
       const date = new Date(this.prevMonth.year, this.prevMonth.monthIndex, day);
-      const formattedDate = this.getFormattedDate(date);
+      const formattedDate = this.monthUtils.getFormattedDate({
+        date,
+        format: 'YYYY/MM/DD'
+      });
       const isWeekend = date.getDay() === 0 || date.getDay() === 6;
 
       return {
@@ -55,7 +58,10 @@ export class MonthCalendarData {
     const curr = this.generateArrayOfCurrMonthDays();
     return curr.map((day) => {
       const date = new Date(this.currentMonth.year, this.currentMonth.monthIndex, day);
-      const formattedDate = this.getFormattedDate(date);
+      const formattedDate = this.monthUtils.getFormattedDate({
+        date,
+        format: 'YYYY/MM/DD'
+      });
       const isWeekend = date.getDay() === 0 || date.getDay() === 6;
 
       return {
@@ -72,7 +78,10 @@ export class MonthCalendarData {
     const next = this.generateArrayOfNextMonthDays().slice(0, lastWeekEmptyDays);
     return next.map((day) => {
       const date = new Date(this.nextMonth.year, this.nextMonth.monthIndex, day);
-      const formattedDate = this.getFormattedDate(date);
+      const formattedDate = this.monthUtils.getFormattedDate({
+        date,
+        format: 'YYYY/MM/DD'
+      });
       const isWeekend = date.getDay() === 0 || date.getDay() === 6;
 
       return {
@@ -121,10 +130,7 @@ export class MonthCalendarData {
       lastDayOfWeekNumber
     ];
   }
-
-  private getFormattedDate(date: Date) {
-    return `${date.getFullYear()}/${
-      date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : date.getMonth() + 1
-    }/${date.getDate() < 10 ? `0${date.getDate()}` : date.getDate()}`;
-  }
 }
+
+const x = new MonthCalendarData(2021, 1, 'Mon').generateData();
+console.log(x);
