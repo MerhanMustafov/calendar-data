@@ -131,6 +131,3 @@ export class MonthCalendarData {
     ];
   }
 }
-
-const x = new MonthCalendarData(2021, 1, 'Mon').generateData();
-console.log(x);
