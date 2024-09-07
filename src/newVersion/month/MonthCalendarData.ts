@@ -2,6 +2,7 @@ import { MonthDTO } from './MonthDTO';
 import { MonthFactory } from './MonthFactory';
 import { MonthNumber, WeekDayString } from '../types';
 import { MonthUtils } from './MonthUtils';
+import { firstDayOfWeekLookUp, weekLookUp } from '../constants';
 
 export class MonthCalendarData {
   private monthFactory: MonthFactory = new MonthFactory();
@@ -11,7 +12,11 @@ export class MonthCalendarData {
   private currentMonth: MonthDTO;
   private nextMonth: MonthDTO;
 
+  private firstDayOfWeek: WeekDayString;
+
   constructor(year: number, monthNumber: MonthNumber, firstDayOfWeek?: WeekDayString) {
+    this.firstDayOfWeek = firstDayOfWeek || 'Mon';
+
     this.currentMonth = this.monthFactory.createCurrentMonth(year, monthNumber, firstDayOfWeek);
 
     this.prevMonth = this.monthFactory.createPreviouseMonthFrom(this.currentMonth);
@@ -22,7 +27,8 @@ export class MonthCalendarData {
     const prev = this.generatePrevMonthFormattedData();
     const curr = this.generateCurrMonthFormattedData();
     const next = this.generateNextMonthFormattedData();
-    return { prev, curr, next };
+    const weekStrings = weekLookUp[firstDayOfWeekLookUp[this.firstDayOfWeek]].dayString;
+    return { weekStrings, prev, curr, next };
   }
 
   private generatePrevMonthFormattedData() {

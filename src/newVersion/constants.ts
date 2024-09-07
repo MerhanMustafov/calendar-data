@@ -1,14 +1,13 @@
-export type FirstDayOfWeekString = 'Mon' | 'Tue' | 'Wed' | 'Thu' | 'Fri' | 'Sat' | 'Sun';
-export type FirstDayOfWeekNumber = 1 | 2 | 3 | 4 | 5 | 6 | 7;
+import { WeekDayString, WeekDayNumber } from './types';
 
 type DaysString = string[];
 interface Data {
   dayString: DaysString;
-  emptyBoxesFirstWeek: Record<FirstDayOfWeekNumber, number>;
-  emptyBoxesLastWeek: Record<FirstDayOfWeekNumber, number>;
+  emptyBoxesFirstWeek: Record<WeekDayNumber, number>;
+  emptyBoxesLastWeek: Record<WeekDayNumber, number>;
 }
 
-export const firstDayOfWeekLookUp: Record<FirstDayOfWeekString, FirstDayOfWeekNumber> = {
+export const firstDayOfWeekLookUp: Record<WeekDayString, WeekDayNumber> = {
   Mon: 1,
   Tue: 2,
   Wed: 3,
@@ -18,7 +17,7 @@ export const firstDayOfWeekLookUp: Record<FirstDayOfWeekString, FirstDayOfWeekNu
   Sun: 7
 };
 
-export const weekLookUp: Record<FirstDayOfWeekNumber, Data> = {
+export const weekLookUp: Record<WeekDayNumber, Data> = {
   1: {
     dayString: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
     emptyBoxesFirstWeek: {
